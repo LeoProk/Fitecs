@@ -63,4 +63,9 @@ public class UtilitiesFactory {
                                                    boolean addToBackStack) {
         return new ReplaceFragment(context, fragment, tag, addToBackStack);
     }
+    //Gets info from json url
+    public static FactoryInterface getFromUrl(String url){
+
+        return new JSONConverter(url);
+    }
 }

@@ -1,19 +1,21 @@
 package tk.leopro.fitecs.AppSpecifics;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import tk.leopro.fitecs.Interfaces.FactoryInterface;
+import tk.leopro.fitecs.Utilities.UtilitiesFactory;
 
 /**
  * Gets user info from url using ip in json format.
  */
 public class LocationGetter extends AsyncTask<String,Void,Void> implements FactoryInterface {
 
-
+    JSONObject mReader;
 
 
     JSONArray dataJsonArr = null;
@@ -27,29 +29,21 @@ public class LocationGetter extends AsyncTask<String,Void,Void> implements Facto
 
     @Override
     protected Void doInBackground(String... params) {
-        String countGetterUrl = "http://ip-api.com/json";
         try {
-
-            // instantiate our json parser
-            JsonParser jParser = new JsonParser();
-
-            // get json string from url
-            JSONObject json = jParser.getJSONFromUrl(yourJsonStringUrl);
-
-            // get the array of users
-            dataJsonArr = json.getJSONArray("Users");
-
-            // loop through all users
-            for (int i = 0; i < dataJsonArr.length(); i++) {
-                JSONObject c = dataJsonArr.getJSONObject(i);
-                // Storing each json item in variable
-                String country = c.getString("firstname");
-            }
-
+            mReader= new JSONObject((String)UtilitiesFactory.getFromUrl(params[0]).doTask());
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
         return null;
+    }
+
+    @Override
+    protected void onPostExecute(Void aVoid) {
+        super.onPostExecute(aVoid);
+        try {
+            Log.e("YAY",mReader.getString("country")+" "+ mReader.getString("countryCode") );
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }
