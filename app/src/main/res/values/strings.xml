@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Fitecs</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="no_connection">No internet connections available</string>
+
+</resources>
