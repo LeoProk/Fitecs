@@ -1,5 +1,7 @@
 package tk.leopro.fitecs.AppSpecifics;
 
+import android.content.Context;
+
 import tk.leopro.fitecs.Interfaces.FactoryInterface;
 
 /**
@@ -8,7 +10,7 @@ import tk.leopro.fitecs.Interfaces.FactoryInterface;
 public class AppFactory  {
 
     //Gets list of countries
-    public static FactoryInterface getCountries(){
-        return new AllCountriesList();
+    public static FactoryInterface getRegisterInfo(Context context){
+        return new CountriesPhoneMaker(context);
     }
 }
