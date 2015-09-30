@@ -3,6 +3,7 @@ package tk.leopro.fitecs.AppSpecifics;
 import android.content.Context;
 import android.telephony.TelephonyManager;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import tk.leopro.fitecs.Interfaces.FactoryInterface;
@@ -21,14 +22,15 @@ final class CountriesPhoneMaker implements FactoryInterface {
 
     @Override
     public Object doTask() {
-        String countryZipCode="";
+        ArrayList<String> locations = new ArrayList<>();
         HashMap<String,String> countriesPhones = new HashMap<>();
         String[] codes=mContext.getResources().getStringArray(R.array.counties);
         for(int i=0;i<codes.length;i++){
             String[] locationCodes=codes[i].split(",");
+            locations.add(locationCodes[0]);
             countriesPhones.put(locationCodes[0],locationCodes[1].replaceAll("\\s+",""));
         }
-        return countryZipCode;
+        return new RegisterInfo(countriesPhones,locations);
 
     }
 }
