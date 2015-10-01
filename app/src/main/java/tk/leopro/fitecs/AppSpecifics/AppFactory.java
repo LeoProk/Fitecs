@@ -13,4 +13,7 @@ public class AppFactory  {
     public static FactoryInterface getRegisterInfo(Context context){
         return new CountriesPhoneMaker(context);
     }
+    public static FactoryInterface getCurrentLocation(Context context){
+        return new CurrentLocation(context);
+    }
 }

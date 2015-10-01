@@ -10,7 +10,7 @@ import tk.leopro.fitecs.Interfaces.FactoryInterface;
 import tk.leopro.fitecs.R;
 
 /**
- * Created by Leo on 9/18/2015.
+ * Gets phone code and contries from array xml and make hashmap and arraylist from them.
  */
 final class CountriesPhoneMaker implements FactoryInterface {
 

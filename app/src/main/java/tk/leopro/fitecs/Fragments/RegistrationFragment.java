@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
@@ -35,13 +37,26 @@ public class RegistrationFragment extends Fragment {
     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
     // Apply the adapter to the spinner
     spinner.setAdapter(adapter);
-    spinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-               Log.e("your code is : ", mInfo.getAreaCode(spinner.getSelectedItem().toString()));
-            }
+    spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            Log.e("your code is : ", mInfo.getAreaCode(spinner.getSelectedItem().toString()));
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+
+        }
     });
     new LocationGetter().execute("http://ip-api.com/json");
+    final EditText phone = (EditText)rootView.findViewById(R.id.phoneNum);
+    final Button next = (Button)rootView.findViewById(R.id.next);
+    next.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            
+        }
+    });
     return rootView;
     }
 }
