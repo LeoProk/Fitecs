@@ -1,7 +1,6 @@
 package tk.leopro.fitecs.AppSpecifics;
 
 import android.content.Context;
-import android.telephony.TelephonyManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,7 +29,7 @@ final class CountriesPhoneMaker implements FactoryInterface {
             locations.add(locationCodes[0]);
             countriesPhones.put(locationCodes[0],locationCodes[1].replaceAll("\\s+",""));
         }
-        return new RegisterInfo(countriesPhones,locations);
+        return new CodesAndCountriesInfo(countriesPhones,locations);
 
     }
 }

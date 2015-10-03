@@ -2,33 +2,30 @@ package tk.leopro.fitecs.Fragments;
 
 import android.os.Bundle;
 import android.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-
-import java.util.ArrayList;
-
 import tk.leopro.fitecs.AppSpecifics.AppFactory;
 import tk.leopro.fitecs.AppSpecifics.LocationGetter;
-import tk.leopro.fitecs.AppSpecifics.RegisterInfo;
+import tk.leopro.fitecs.AppSpecifics.CodesAndCountriesInfo;
 import tk.leopro.fitecs.R;
 
 /**
  * This fragment get the phone from text view and send confirmation sms to the number
  */
 public class RegistrationFragment extends Fragment {
-    RegisterInfo mInfo;
+    CodesAndCountriesInfo mInfo;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
     final View rootView = inflater.inflate(R.layout.register_fragment, container, false);
-    mInfo = (RegisterInfo)AppFactory.getRegisterInfo(getActivity()).doTask();
+    mInfo = (CodesAndCountriesInfo)AppFactory.getRegisterInfo(getActivity()).doTask();
+    final EditText phone = (EditText)rootView.findViewById(R.id.phoneNum);
+    final Button next = (Button)rootView.findViewById(R.id.next);
     final Spinner spinner = (Spinner) rootView.findViewById(R.id.country_spinner);
     // Create an ArrayAdapter using the string array and a default spinner layout
     ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
@@ -37,26 +34,8 @@ public class RegistrationFragment extends Fragment {
     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
     // Apply the adapter to the spinner
     spinner.setAdapter(adapter);
-    spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-        @Override
-        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            Log.e("your code is : ", mInfo.getAreaCode(spinner.getSelectedItem().toString()));
-        }
-
-        @Override
-        public void onNothingSelected(AdapterView<?> parent) {
-
-        }
-    });
+    AppFactory.getRegistrationFragInfo(spinner,next,phone,mInfo,getActivity()).doTask();
     new LocationGetter().execute("http://ip-api.com/json");
-    final EditText phone = (EditText)rootView.findViewById(R.id.phoneNum);
-    final Button next = (Button)rootView.findViewById(R.id.next);
-    next.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            
-        }
-    });
     return rootView;
     }
 }
