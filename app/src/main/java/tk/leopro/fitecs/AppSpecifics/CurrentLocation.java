@@ -13,7 +13,7 @@ import tk.leopro.fitecs.AppController;
 import tk.leopro.fitecs.Interfaces.FactoryInterface;
 
 /**
- * Created by Leo on 10/1/2015.
+ * Connects to google apis and gets current location
  */
 final class CurrentLocation implements FactoryInterface , GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 

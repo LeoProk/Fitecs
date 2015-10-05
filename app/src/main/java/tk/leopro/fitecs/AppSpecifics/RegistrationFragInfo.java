@@ -11,7 +11,8 @@ import android.widget.Spinner;
 import tk.leopro.fitecs.Interfaces.FactoryInterface;
 
 /**
- * Created by Leo on 10/2/2015.
+ * This class sets listeners of on spinner with change area code based on country
+ * and item click and on button click with create sms with phone number.
  */
 final class RegistrationFragInfo implements FactoryInterface {
 

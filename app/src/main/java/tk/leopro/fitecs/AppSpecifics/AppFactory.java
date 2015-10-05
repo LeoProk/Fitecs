@@ -8,7 +8,7 @@ import android.widget.Spinner;
 import tk.leopro.fitecs.Interfaces.FactoryInterface;
 
 /**
- * Created by Leo on 9/18/2015.
+ * App factory that create new classes based on call.
  */
 public class AppFactory  {
 
@@ -16,6 +16,7 @@ public class AppFactory  {
     public static FactoryInterface getRegisterInfo(Context context){
         return new CountriesPhoneMaker(context);
     }
+    //Conects to google api and gets current location
     public static FactoryInterface getCurrentLocation(Context context){
         return new CurrentLocation(context);
     }

@@ -12,7 +12,7 @@ import java.net.URL;
 import tk.leopro.fitecs.Interfaces.FactoryInterface;
 
 /**
- * Created by Leo on 9/19/2015.
+ * Convert json to gets location from it.
  */
 final class JSONConverter implements FactoryInterface {
 

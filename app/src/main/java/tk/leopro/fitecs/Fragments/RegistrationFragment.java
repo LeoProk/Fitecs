@@ -9,16 +9,25 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+
+import java.util.concurrent.ExecutionException;
+
 import tk.leopro.fitecs.AppSpecifics.AppFactory;
 import tk.leopro.fitecs.AppSpecifics.LocationGetter;
 import tk.leopro.fitecs.AppSpecifics.CodesAndCountriesInfo;
+import tk.leopro.fitecs.Interfaces.OnTaskCompleted;
 import tk.leopro.fitecs.R;
 
 /**
- * This fragment get the phone from text view and send confirmation sms to the number
+ * Thtasis fragment get the phone from text view and send confirmation sms to the number
  */
-public class RegistrationFragment extends Fragment {
-    CodesAndCountriesInfo mInfo;
+public class RegistrationFragment extends Fragment implements OnTaskCompleted {
+    private CodesAndCountriesInfo mInfo;
+    private ArrayAdapter<String> mAdapter;
+    private String mUserCountry;
+    private Spinner mSpinner;
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -26,16 +35,27 @@ public class RegistrationFragment extends Fragment {
     mInfo = (CodesAndCountriesInfo)AppFactory.getRegisterInfo(getActivity()).doTask();
     final EditText phone = (EditText)rootView.findViewById(R.id.phoneNum);
     final Button next = (Button)rootView.findViewById(R.id.next);
-    final Spinner spinner = (Spinner) rootView.findViewById(R.id.country_spinner);
+    mSpinner = (Spinner) rootView.findViewById(R.id.country_spinner);
     // Create an ArrayAdapter using the string array and a default spinner layout
-    ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
+    mAdapter = new ArrayAdapter<>(getActivity(),
     android.R.layout.simple_spinner_item, mInfo.getCountries());
     // Specify the layout to use when the list of choices appears
-    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+    mAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
     // Apply the adapter to the spinner
-    spinner.setAdapter(adapter);
-    AppFactory.getRegistrationFragInfo(spinner,next,phone,mInfo,getActivity()).doTask();
-    new LocationGetter().execute("http://ip-api.com/json");
-    return rootView;
+    mSpinner.setAdapter(mAdapter);
+    AppFactory.getRegistrationFragInfo(mSpinner,next,phone,mInfo,getActivity()).doTask();
+        try {
+            mUserCountry = new LocationGetter(this).execute("http://ip-api.com/json").get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return rootView;
+    }
+
+    @Override
+    public void onTaskCompleted() throws ExecutionException, InterruptedException {
+        mSpinner.setSelection(mAdapter.getPosition(mUserCountry));
     }
 }
