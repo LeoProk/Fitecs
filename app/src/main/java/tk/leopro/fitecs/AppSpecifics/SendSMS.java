@@ -5,6 +5,7 @@ import android.telephony.SmsManager;
 
 import java.util.Random;
 
+import tk.leopro.fitecs.AppController;
 import tk.leopro.fitecs.Interfaces.FactoryInterface;
 import tk.leopro.fitecs.R;
 
@@ -26,6 +27,7 @@ final class SendSMS  implements FactoryInterface {
     public Object doTask() {
         Random rand = new Random();
         String code = Integer.toString(rand.nextInt((98799 - 12345) + 1) + 12345);
+        AppController.mRegisterCode = code;
         String text = String.format(mContext.getResources().getString(R.string.sms_message),
                 code);
         SmsManager smsManager = SmsManager.getDefault();

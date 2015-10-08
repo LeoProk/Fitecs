@@ -8,7 +8,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import tk.leopro.fitecs.Fragments.ConfirmationFragment;
 import tk.leopro.fitecs.Interfaces.FactoryInterface;
+import tk.leopro.fitecs.Utilities.UtilitiesFactory;
 
 /**
  * This class sets listeners of on spinner with change area code based on country
@@ -53,8 +55,8 @@ final class RegistrationFragInfo implements FactoryInterface {
             @Override
             public void onClick(View v) {
                 if(mUserPhone.getText().toString()!= null) {
-                    Log.e("yay", mAreaCode + phoneNumber(mUserPhone.getText().toString()));
                     AppFactory.sendSMS(mAreaCode + phoneNumber(mUserPhone.getText().toString()), mContext).doTask();
+                    UtilitiesFactory.replaceFragment(mContext,new ConfirmationFragment(),"confirm",true).doTask();
                 }
             }
         });
